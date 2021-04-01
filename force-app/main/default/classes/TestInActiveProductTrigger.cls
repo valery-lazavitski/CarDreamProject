@@ -1,8 +1,5 @@
 @isTest
-public class TestInActiveProductTrigger {
-    
-    List<Product2> listProducts = new List<Product2>();
-    
+public class TestInActiveProductTrigger {    
     @isTest static void TestCreateNewTask(){
         // Insert Product
         Product2 pr = new Product2();
@@ -40,6 +37,11 @@ public class TestInActiveProductTrigger {
         pr.IsActive = false;
         Update pr;
         Test.stopTest();
+        
+        List <Task> triggerTestTasks = [SELECT Id, WhatId FROM Task WHERE WhatId = :opp.Id];
+        System.debug(triggerTestTasks);
+        System.debug(triggerTestTasks.size());
+        System.assert(triggerTestTasks.size() > 0, 'Cannot find any new Test Tasks');
     }
 
 }
